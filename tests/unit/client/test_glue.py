@@ -1,8 +1,7 @@
 """tests for AWS Boto3 Glue client wrapper"""
 
-from test.unit.helper import create_connection, create_job, create_jobs
-
 from awsglueavailability.client import Conn, Glue, Job, jobs_by_subnet
+from tests.unit.helper import create_connection, create_job, create_jobs
 
 
 def test_list_gluejobs(glue_client):
