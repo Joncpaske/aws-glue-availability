@@ -54,18 +54,18 @@ def jobs_by_subnet(jobs: list[Job]) -> dict[str, str]:
 
 class EC2:  # pylint: disable=too-few-public-methods
     """AWS EC2 Client
-    
+
     Keyword arguments:
     client -- boto3 compatable ec2 client
     """
 
-    def __init__(self, client):
+    def __init__(self, client=None):
         self.client = client if client else boto3.client("ec2")
 
     @lru_cache(maxsize=32)
     def get_subnet(self, subnet_id) -> Subnet:
         """retrieve vpc subnet information
-        
+
         Keyword arguments:
         subnet_id -- id of subnet to retrieve attributes for
         """
@@ -79,7 +79,7 @@ class EC2:  # pylint: disable=too-few-public-methods
 
 class Glue:
     """AWS Glue Client
-    
+
     Keyword arguments:
     client -- boto3 compatable Glue client
     """
@@ -105,7 +105,7 @@ class Glue:
 
     def get_job_connections(self, job_name) -> list[Conn]:
         """get the Glue Jobs associated to the specified job
-        
+
         Keyword arguments:
         job_name -- Glue job name
         """
