@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "awsglueavailability"
+version = "0.1.0"
+description = ""
+authors = ["Jon Paske <joncpaske@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+boto3 = "^1.38.30"
+diagrams = "^0.24.4"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.0"
+poethepoet = "^0.34.0"
+pytest-cov = "^6.1.1"
+moto = "^5.1.5"
+pylint = "^3.3.7"
+black = "^25.1.0"
+isort = "^6.0.1"
+
+[tool.pylint.format]
+max-line-length=120
+
+[tool.poe.tasks]
+_black = "black ."
+_isort = "isort ."
+fmt = ["_black", "_isort"]
+lint = "pylint ."
+test = "pytest --cov=awsglueavailability"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

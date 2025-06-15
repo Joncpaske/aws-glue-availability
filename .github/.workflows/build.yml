@@ -1,0 +1,36 @@
+name: Build
+on:
+  push:
+    branches-ignore:
+      - 'main'
+env:
+  POETRY_VERSION: 1.8.4
+
+jobs:
+  sonarqube:
+    name: SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: install poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13' 
+      - name: install dependencies
+        run: poetry install
+      - name: isort
+        run: poetry run isort --profile black --filter-files .
+      - name: black
+        run: poetry run black --line-length=88 .
+      - name: lint
+        run: poetry run pylint .
+      - name: run tests
+        run: poetry run pytest --cov-report=xml --cov=awsglueavailability tests
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
