@@ -1,9 +1,8 @@
 """mocked e2e tests"""
 
-from test.unit.helper import create_connections, create_jobs
-
 from awsglueavailability import app
 from awsglueavailability.client import EC2, Glue
+from tests.unit.helper import create_connections, create_jobs
 
 
 def test_diagram(glue_client, ec2_client):
